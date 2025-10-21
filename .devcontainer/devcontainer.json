@@ -1,8 +1,51 @@
 // See https://containers.dev/implementors/json_reference/ for configuration reference
 {
-	"name": "MyAnimeApp Dev Container",
+	"name": "My Anime App - Next.js Dev",
 	"build": {
 		"dockerfile": "Dockerfile"
 	},
-  "remoteUser": "node"
+	"remoteUser": "node",
+	
+	// Configure port forwarding untuk Next.js dev server
+	"forwardPorts": [3000],
+	"portsAttributes": {
+		"3000": {
+			"label": "Next.js App",
+			"onAutoForward": "notify"
+		}
+	},
+
+	// VS Code extensions yang berguna untuk Next.js development
+	"customizations": {
+		"vscode": {
+			"extensions": [
+				"dbaeumer.vscode-eslint",
+				"esbenp.prettier-vscode",
+				"bradlc.vscode-tailwindcss",
+				"ms-vscode.vscode-typescript-next",
+				"formulahendry.auto-rename-tag",
+				"christian-kohler.npm-intellisense",
+				"christian-kohler.path-intellisense"
+			],
+			"settings": {
+				"editor.formatOnSave": true,
+				"editor.codeActionsOnSave": {
+					"source.fixAll.eslint": "explicit"
+				},
+				"typescript.tsdk": "node_modules/typescript/lib",
+				"typescript.enablePromptUseWorkspaceTsdk": true
+			}
+		}
+	},
+
+	// Install dependencies otomatis setelah container dibuat
+	"postCreateCommand": "npm install",
+
+	// Start dev server otomatis (opsional, uncomment jika mau)
+	// "postStartCommand": "npm run dev",
+
+	// Features tambahan
+	"features": {
+		"ghcr.io/devcontainers/features/git:1": {}
+	}
 }
